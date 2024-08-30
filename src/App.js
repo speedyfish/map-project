@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import MapComponent from './components/MapComponent';
 import { useSelector } from 'react-redux';
-import { useMapEvents } from 'react-leaflet';
 
 function App() {
-  const [apiResponse, setApiResponse] = useState(null);
   const [routeData, setRouteData] = useState(null);
   const positions = useSelector((state) => state.position.positions);
   const [axisType, setAxisType] = useState('primary');
@@ -29,7 +27,6 @@ function App() {
   // Function to call the POST API
   const callPostApi = async () => {
     try {
-      console.log("hihihii", positions[0].lng, positions[0].lat )
       const response = await fetch('https://routing-web-service-ityenzhnyq-an.a.run.app/route', {
         method: 'POST',
         headers: {
@@ -77,7 +74,7 @@ function App() {
       // Check if the response is successful
       if (response.ok) {
         // If successful, show an alert
-        alert('API call was successful!');
+        console.log('API call was successful!');
       } else {
         // If not successful, you can optionally handle different status codes
         console.error('API call failed with status:', response.status);
@@ -87,12 +84,15 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    callReadyApi();
+  }, []);
+
   
   return (
     <div className="App">
       <MapComponent routeData={routeData}/>
       <div className="overlay"> 
-        <button onClick={callReadyApi}>Ready</button>
         <button onClick={callApi}>Get route</button>
         <select value={axisType} onChange={(e) => setAxisType(e.target.value)}>
           <option value="primary">Primary</option>

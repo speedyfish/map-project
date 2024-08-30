@@ -1,7 +1,10 @@
-/* App.css */
+/* Map container styling for better visibility and design */
 .leaflet-container {
-  height: 100vh;
-  width: 100%;
+  height: 100vh; /* Full viewport height */
+  width: 100%; /* Full width */
+  background-color: #f0f0f0; /* Light background color for the map area */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .overlay {
